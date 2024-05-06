@@ -1,12 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from '../api/axios';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 const useLoginForm = (setAuth, isAuthenticated) => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const userRef = useRef();
 	const errRef = useRef();
+	const [cookies, setCookie] = useCookies(['authToken']); // Aquí se inicializa el hook useCookies para gestionar cookies
 
 	const [user, setUser] = useState('');
 	const [password, setPassword] = useState('');
@@ -55,9 +57,11 @@ const useLoginForm = (setAuth, isAuthenticated) => {
 			const name = response.data.name;
 			setAuth({ name, user, password, accessToken });
 			setLoading(false);
-			console.log(response.data);
-			// Redirect to dashboard after successful login, storing the current location
+			setCookie('authToken', accessToken, {
+				expires: new Date(Date.now() + 30 * 60 * 1000),
+			}); // Guardar el token en una cookie con una duración de 30 minutos
 			navigate('/dashboard', { state: { from: location } });
+			console.log(cookies);
 		} catch (error) {
 			setLoading(false);
 			if (!error.response) {
