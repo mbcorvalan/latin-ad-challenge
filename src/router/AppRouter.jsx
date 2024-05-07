@@ -1,7 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 import NavBar from '../components/NavBar';
-import RequireAuth from '../components/RequireAuth';
-import { LoginPage, DashBoard } from '../pages';
+import RequireAuth from './RequireAuth';
+import LoginPage from '../pages/LoginPage';
+import DashBoard from '../pages/DashBoard';
 
 /**
  * Component representing the main router of the application.

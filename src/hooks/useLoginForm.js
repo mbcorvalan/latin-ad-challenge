@@ -1,89 +1,83 @@
 import { useState, useEffect, useRef } from 'react';
-import axios from '../api/axios';
+import { ERROR_MESSAGES } from '../constants/error';
+import { TIMEOUT_DURATION } from '../constants/timeouts';
+import { login as loginAPI } from '../api/auth';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
+import useAuth from '../hooks/useAuth';
 
-const useLoginForm = (setAuth, isAuthenticated) => {
+const useLoginForm = () => {
+	const { login, logout } = useAuth();
 	const navigate = useNavigate();
 	const location = useLocation();
-	const userRef = useRef();
 	const errRef = useRef();
-	const [cookies, setCookie] = useCookies(['authToken']); // Aquí se inicializa el hook useCookies para gestionar cookies
-
-	const [user, setUser] = useState('');
-	const [password, setPassword] = useState('');
+	const [user, setUser] = useState({ email: '', password: '' });
 	const [errorMsg, setErrorMsg] = useState('');
 	const [loading, setLoading] = useState(false);
 
-	const LOGIN_URL = '/login';
-
-	useEffect(() => {
-		userRef.current.focus();
-	}, []);
-
 	useEffect(() => {
 		setErrorMsg('');
-	}, [user, password]);
+	}, [user]);
 
-	useEffect(() => {
-		setUser('');
-		setPassword('');
-	}, [loading]);
+	const processLogin = async user => {
+		const loginPromise = loginAPI(user);
+		const timeoutPromise = new Promise((_, reject) =>
+			setTimeout(() => reject(new Error('Timeout')), TIMEOUT_DURATION),
+		);
+		const loginData = await Promise.race([loginPromise, timeoutPromise]);
 
-	useEffect(() => {
-		if (isAuthenticated) {
-			setAuth({});
+		if (!loginData || !loginData.name) {
+			throw new Error('Invalid login data');
 		}
-	}, [isAuthenticated, setAuth]);
 
-	const handleSubmit = async (e) => {
+		return {
+			email: user.email,
+			password: user.password,
+			name: loginData.name,
+			accessToken: loginData.accessToken,
+		};
+	};
+
+	const handleSubmit = async e => {
 		e.preventDefault();
 		setLoading(true);
-
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		if (!user || !emailRegex.test(user)) {
-			setErrorMsg('Please enter a valid email address.');
-			setLoading(false);
-			return;
-		}
-
 		try {
-			const response = await axios.post(
-				LOGIN_URL,
-				{ email: user, password: password },
-				{ headers: { 'Content-Type': 'application/json' } }
-			);
-			const accessToken = response.data.token;
-			const name = response.data.name;
-			setAuth({ name, user, password, accessToken });
+			const userData = await processLogin(user);
+			login(userData);
 			setLoading(false);
-			setCookie('authToken', accessToken, {
-				expires: new Date(Date.now() + 30 * 60 * 1000),
-			}); // Guardar el token en una cookie con una duración de 30 minutos
 			navigate('/dashboard', { state: { from: location } });
-			console.log(cookies);
 		} catch (error) {
 			setLoading(false);
-			if (!error.response) {
-				setErrorMsg('No server response');
-			} else if (error.response.status === 400) {
-				setErrorMsg('Missing email or password');
-			} else if (error.response.status === 401) {
-				setErrorMsg('Invalid email or password');
-			} else {
-				setErrorMsg('Login failed, try again later');
-			}
-			errRef.current.focus();
+			handleError(error);
 		}
 	};
 
+	const handleError = error => {
+		if (error.message === 'Timeout') {
+			setErrorMsg(ERROR_MESSAGES.TIMEOUT);
+			logout();
+			navigate('/login');
+		} else if (error.message === 'Invalid login data') {
+			setErrorMsg(ERROR_MESSAGES.INVALID_LOGIN_DATA);
+		} else if (error.response) {
+			if (error.response.status === 400) {
+				setErrorMsg(ERROR_MESSAGES.MISSING_CREDENTIALS);
+			} else if (error.response.status === 401) {
+				setErrorMsg(ERROR_MESSAGES.INVALID_CREDENTIALS);
+			} else {
+				setErrorMsg(ERROR_MESSAGES.LOGIN_FAILED);
+			}
+		} else if (error.request) {
+			setErrorMsg(ERROR_MESSAGES.NO_SERVER_RESPONSE);
+		} else {
+			setErrorMsg('Error: ' + error.message);
+		}
+		errRef.current.focus();
+	};
+
 	return {
-		userRef,
 		errRef,
 		user,
 		setUser,
-		password,
-		setPassword,
 		errorMsg,
 		loading,
 		handleSubmit,
