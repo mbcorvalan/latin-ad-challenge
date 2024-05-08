@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { fetchDisplays } from '../../api/display';
+import useProductChange from '../state/useProductChange';
 
 const useDisplays = ({ pageSize, offset, name, type, token }) => {
 	const [displaysData, setDisplaysData] = useState({
@@ -8,6 +9,7 @@ const useDisplays = ({ pageSize, offset, name, type, token }) => {
 	});
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+	const { productChanged, resetProductChange } = useProductChange();
 
 	const fetchData = useCallback(async () => {
 		setLoading(true);
@@ -39,6 +41,13 @@ const useDisplays = ({ pageSize, offset, name, type, token }) => {
 	useEffect(() => {
 		fetchData();
 	}, [fetchData]);
+
+	useEffect(() => {
+		if (productChanged) {
+			fetchData();
+			resetProductChange();
+		}
+	}, [productChanged, fetchData, resetProductChange]);
 
 	return {
 		displays: displaysData.displays,
