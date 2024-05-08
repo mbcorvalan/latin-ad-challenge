@@ -4,5 +4,4 @@ export const ERROR_MESSAGES = {
 	INVALID_CREDENTIALS: 'Invalid email or password',
 	LOGIN_FAILED: 'Login failed, try again later',
 	INVALID_LOGIN_DATA: 'Login failed: invalid data received',
-	TIMEOUT: 'The server took too long to respond',
 };

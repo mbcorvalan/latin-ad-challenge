@@ -1,12 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-import { ERROR_MESSAGES } from '../constants/error';
-import { TIMEOUT_DURATION } from '../constants/timeouts';
-import { login as loginAPI } from '../api/auth';
+import { ERROR_MESSAGES } from '../../constants/error';
+import { login as loginAPI } from '../../api/auth';
 import { useNavigate, useLocation } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
+import useAuth from '../auth/useAuth';
 
 const useLoginForm = () => {
-	const { login, logout } = useAuth();
+	const { setUserData } = useAuth();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const errRef = useRef();
@@ -19,11 +18,7 @@ const useLoginForm = () => {
 	}, [user]);
 
 	const processLogin = async user => {
-		const loginPromise = loginAPI(user);
-		const timeoutPromise = new Promise((_, reject) =>
-			setTimeout(() => reject(new Error('Timeout')), TIMEOUT_DURATION),
-		);
-		const loginData = await Promise.race([loginPromise, timeoutPromise]);
+		const loginData = await loginAPI(user);
 
 		if (!loginData || !loginData.name) {
 			throw new Error('Invalid login data');
@@ -39,10 +34,11 @@ const useLoginForm = () => {
 
 	const handleSubmit = async e => {
 		e.preventDefault();
+		setErrorMsg('');
 		setLoading(true);
 		try {
 			const userData = await processLogin(user);
-			login(userData);
+			setUserData(userData);
 			setLoading(false);
 			navigate('/dashboard', { state: { from: location } });
 		} catch (error) {
@@ -52,11 +48,7 @@ const useLoginForm = () => {
 	};
 
 	const handleError = error => {
-		if (error.message === 'Timeout') {
-			setErrorMsg(ERROR_MESSAGES.TIMEOUT);
-			logout();
-			navigate('/login');
-		} else if (error.message === 'Invalid login data') {
+		if (error.message === 'Invalid login data') {
 			setErrorMsg(ERROR_MESSAGES.INVALID_LOGIN_DATA);
 		} else if (error.response) {
 			if (error.response.status === 400) {

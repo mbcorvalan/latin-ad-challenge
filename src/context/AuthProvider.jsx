@@ -18,12 +18,12 @@ export const AuthProvider = ({ children }) => {
 		return {};
 	});
 
-	const login = useCallback(userData => {
+	const setUserData = useCallback(userData => {
 		setAuth(userData);
 		localStorage.setItem('user', encrypt(userData));
 	}, []);
 
-	const logout = useCallback(() => {
+	const removeUserData = useCallback(() => {
 		setAuth({});
 		localStorage.removeItem('user');
 	}, []);
@@ -31,7 +31,9 @@ export const AuthProvider = ({ children }) => {
 	const isAuthenticated = !!auth.accessToken;
 
 	return (
-		<AuthContext.Provider value={{ auth, login, logout, isAuthenticated }}>
+		<AuthContext.Provider
+			value={{ auth, setUserData, removeUserData, isAuthenticated }}
+		>
 			{children}
 		</AuthContext.Provider>
 	);

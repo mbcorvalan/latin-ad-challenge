@@ -1,17 +1,18 @@
-import useAuth from '../hooks/useAuth';
+import useAuth from '../../hooks/auth/useAuth';
 import { useNavigate } from 'react-router-dom';
+import CustomButton from '../common/CustomButton';
 
 /**
  * Component representing the navigation bar.
  * @returns {JSX.Element} JSX element representing the navigation bar.
  */
 export default function NavBar() {
-	const { auth, logout } = useAuth();
+	const { auth, removeUserData } = useAuth();
 	const { name } = auth;
 	const navigate = useNavigate();
 
 	const handleLogout = () => {
-		logout();
+		removeUserData();
 		navigate('/login');
 	};
 
@@ -30,7 +31,7 @@ export default function NavBar() {
 								<span aria-live='polite'>{`Welcome, ${name}`}</span>
 							</li>
 							<li>
-								<button onClick={handleLogout}>Logout</button>
+								<CustomButton onClick={handleLogout}>Logout</CustomButton>
 							</li>
 						</>
 					)}

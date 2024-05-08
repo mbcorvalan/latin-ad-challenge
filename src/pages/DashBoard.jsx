@@ -1,42 +1,59 @@
-import { useState, useEffect } from 'react';
-import { fetchDisplays } from '../api/display';
-import useAuth from '../hooks/useAuth';
+import useDashboardData from '../hooks/state/useDashboardData';
+import SearchForm from '../components/form/SearchForm';
+import PaginationControls from '../components/pagination/PaginationControls';
+import DisplayList from '../components/display/DisplayList';
+import { useNavigate, useLocation } from 'react-router-dom';
+import CustomButton from '../components/common/CustomButton';
 
 const DashBoard = () => {
-	const { token } = useAuth();
-	const [displays, setDisplays] = useState([]);
-	const [pageSize, setPageSize] = useState(10);
-	const [offset, setOffset] = useState(0);
-	const [name, setName] = useState('');
-	const [type, setType] = useState('');
+	const {
+		params,
+		displays,
+		loading,
+		error,
+		handleSubmit,
+		handleResetFilters,
+		nextPage,
+		prevPage,
+		totalPages,
+	} = useDashboardData();
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const data = await fetchDisplays({
-					pageSize,
-					offset,
-					name,
-					type,
-					token,
-				}); // Pasa el token
-				setDisplays(data);
-			} catch (error) {
-				console.error('Error fetching displays:', error);
-			}
-		};
+	const navigate = useNavigate();
+	const location = useLocation();
 
-		fetchData();
-	}, [pageSize, offset, name, type, token]);
+	const handleCreateProduct = () => {
+		navigate('/createDisplay', { state: { from: location } });
+	};
+
+	const currentPage = params.currentPage || 1;
+
 	return (
 		<div>
 			<h1>Dashboard</h1>
-			{/* Aquí puedes agregar controles para ajustar pageSize, offset, name y type */}
-			<ul>
-				{displays.map(display => (
-					<li key={display.id}>{display.name}</li>
-				))}
-			</ul>
+			<CustomButton onClick={handleCreateProduct}>
+				Crear nuevo producto
+			</CustomButton>
+			<SearchForm
+				params={params}
+				onSubmit={handleSubmit}
+				onReset={handleResetFilters}
+			/>
+			{loading && <p>Loading...</p>}
+			{error && <p>Error: {error}</p>}
+			{!loading && !error && displays?.length === 0 && (
+				<p>No se encontraron resultados.</p>
+			)}
+			{displays?.length > 0 && (
+				<>
+					<DisplayList displays={displays} />
+					<PaginationControls
+						currentPage={currentPage}
+						totalPages={totalPages}
+						onNext={nextPage}
+						onPrev={prevPage}
+					/>
+				</>
+			)}
 		</div>
 	);
 };

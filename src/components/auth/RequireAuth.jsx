@@ -1,5 +1,5 @@
 import { useLocation, Navigate } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
+import useAuth from '../../hooks/auth/useAuth';
 
 /**
  * Component to require authentication for accessing private routes.
