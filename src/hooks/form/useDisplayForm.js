@@ -22,7 +22,6 @@ export const useDisplayForm = () => {
 	const { handleSubmit: submitForm, isLoading } = useFormSubmission();
 
 	const onSubmit = async formData => {
-		console.log('Before setting success', isSubmittedSuccessfully);
 		setSubmittedSuccessfully(false);
 		setSubmitError('');
 		try {

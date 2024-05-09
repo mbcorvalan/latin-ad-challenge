@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useAuth from '../auth/useAuth';
-import { postDisplay } from '../../api/create';
+import { postDisplay } from '../../api/createProduct';
 
 export const useSubmitData = () => {
 	const [isLoading, setLoading] = useState(false);

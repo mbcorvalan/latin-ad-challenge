@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { fetchDisplays } from '../../api/display';
+import { getProducts } from '../../api/displayProducts';
 import useProductChange from '../state/useProductChange';
 
 const useDisplays = ({ pageSize, offset, name, type, token }) => {
@@ -15,7 +15,7 @@ const useDisplays = ({ pageSize, offset, name, type, token }) => {
 		setLoading(true);
 		setError(null);
 		try {
-			const response = await fetchDisplays({
+			const response = await getProducts({
 				pageSize,
 				offset,
 				name,

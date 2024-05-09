@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import CustomButton from '../common/CustomButton';
 import DisplayDelete from '../display/DisplayDelete';
+import DisplayProduct from '../display/DisplayProduct';
 
 function DisplayAdCard({
 	id,
@@ -10,11 +11,13 @@ function DisplayAdCard({
 	resolution_height,
 	resolution_width,
 	type,
-	// picture_url,
+	picture_url,
 }) {
 	return (
 		<div>
-			{/* <img src={picture_url} alt={name} /> */}
+			<DisplayProduct displayId={id}>
+				<img src={picture_url} alt={name} />
+			</DisplayProduct>
 			<h2>{name}</h2>
 			<p>{description}</p>
 			<div>
@@ -45,7 +48,7 @@ DisplayAdCard.propTypes = {
 	resolution_width: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 		.isRequired,
 	type: PropTypes.string.isRequired,
-	// picture_url: PropTypes.string.isRequired,
+	picture_url: PropTypes.string.isRequired,
 };
 
 export default DisplayAdCard;

@@ -1,12 +1,6 @@
 import axiosInstance from './axios';
 
-export const fetchDisplays = async ({
-	pageSize,
-	offset,
-	name,
-	type,
-	token,
-}) => {
+export const getProducts = async ({ pageSize, offset, name, type, token }) => {
 	let url = `/display?pageSize=${pageSize}&offset=${offset}`;
 	if (name) {
 		url += `&name=${name}`;

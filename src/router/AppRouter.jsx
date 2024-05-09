@@ -4,6 +4,7 @@ import RequireAuth from './RequireAuth';
 import LoginPage from '../pages/LoginPage';
 import DashBoard from '../pages/DashBoard';
 import CreateDisplay from '../pages/CreateDisplay';
+import DisplayDetails from '../pages/DisplayDetails';
 /**
  * Component representing the main router of the application.
  * @returns {JSX.Element} JSX element representing the main router.
@@ -29,6 +30,15 @@ export default function AppRouter() {
 					element={
 						<RequireAuth>
 							<CreateDisplay />
+						</RequireAuth>
+					}
+				/>
+				{/* Dynamic route for display details */}
+				<Route
+					path='/display/:displayId'
+					element={
+						<RequireAuth>
+							<DisplayDetails />
 						</RequireAuth>
 					}
 				/>

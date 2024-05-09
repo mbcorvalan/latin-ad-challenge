@@ -1,6 +1,6 @@
 import axiosInstance from './axios';
 
-export const deleteDisplay = async ({ id, token }) => {
+export const deleteProduct = async ({ id, token }) => {
 	let url = `/display/${id}`;
 
 	try {
@@ -9,6 +9,7 @@ export const deleteDisplay = async ({ id, token }) => {
 				Authorization: `Bearer ${token}`,
 			},
 		});
+
 		return response.data;
 	} catch (error) {
 		console.error('Failed to delete display:', error);

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { deleteDisplay } from '../../api/delete';
+import { deleteProduct } from '../../api/deleteProduct';
 import useAuth from '../auth/useAuth';
 import useProductChange from '../state/useProductChange';
 
@@ -15,7 +15,7 @@ const useDeleteDisplay = displayId => {
 		setError(null);
 		setIsDeleted(false);
 		try {
-			await deleteDisplay({ id: displayId, token: auth.accessToken });
+			await deleteProduct({ id: displayId, token: auth.accessToken });
 			setIsDeleted(true);
 			notifyProductChange();
 		} catch (error) {
