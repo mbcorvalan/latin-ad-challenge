@@ -1,34 +1,30 @@
 import PropTypes from 'prop-types';
-import DisplayAdCard from './DisplayAdsCard';
+import DisplayAdCard from './DisplayAdCard';
 
 const DisplayList = ({ displays }) => {
-	return (
-		<ul>
-			{displays.map(display => (
-				<li key={display.id}>
-					<DisplayAdCard {...display} />
-				</li>
-			))}
-		</ul>
-	);
+	return displays.map(display => (
+		<tr key={display.id}>
+			<DisplayAdCard {...display} />
+		</tr>
+	));
 };
 
 DisplayList.propTypes = {
 	displays: PropTypes.arrayOf(
 		PropTypes.shape({
-			id: PropTypes.number.isRequired, // Ensure each display has an ID for the key prop
-			name: PropTypes.string.isRequired, // Name of the display
-			description: PropTypes.string.isRequired, // Description of the display
-			price_per_day: PropTypes.string.isRequired, // Price per day, assumed to be a string
+			id: PropTypes.number.isRequired,
+			name: PropTypes.string.isRequired,
+			description: PropTypes.string.isRequired,
+			price_per_day: PropTypes.string.isRequired,
 			resolution_height: PropTypes.oneOfType([
 				PropTypes.string,
 				PropTypes.number,
-			]).isRequired, // Resolution height, accepting both string and number
+			]).isRequired,
 			resolution_width: PropTypes.oneOfType([
 				PropTypes.string,
 				PropTypes.number,
-			]).isRequired, // Resolution width
-			type: PropTypes.string.isRequired, // Type of display (indoor, outdoor, etc.)
+			]).isRequired,
+			type: PropTypes.string.isRequired,
 			picture_url: PropTypes.string,
 		}),
 	).isRequired,

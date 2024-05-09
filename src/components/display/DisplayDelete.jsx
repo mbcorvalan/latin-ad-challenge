@@ -8,8 +8,12 @@ const DisplayDelete = ({ displayId }) => {
 
 	return (
 		<div>
-			<CustomButton onClick={handleDelete} disabled={isLoading || isDeleted}>
-				{isLoading ? 'Deleting...' : 'Delete Display'}
+			<CustomButton
+				className='text-red-600 hover:text-red-900'
+				onClick={handleDelete}
+				disabled={isLoading || isDeleted}
+			>
+				{isLoading ? 'Deleting...' : 'Delete'}
 			</CustomButton>
 			{isDeleted && <p>Display deleted successfully!</p>}
 			{error && <p>Error: {error}</p>}

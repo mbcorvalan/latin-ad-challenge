@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/auth/useAuth';
 import useLoginForm from '../hooks/form/useLoginForm';
 import LoginForm from '../components/form/LoginForm';
+import Loading from '../components/display/DisplayLoading';
+import ErrorMsg from '../components/display/DisplayErrorMsg';
 
 export default function LoginPage() {
 	const { setAuth, isAuthenticated } = useAuth();
@@ -17,24 +19,22 @@ export default function LoginPage() {
 	}, [isAuthenticated, navigate]);
 
 	return (
-		!isAuthenticated && (
-			<section>
-				<h1>Sign In</h1>
-				<LoginForm
-					user={user}
-					setUser={setUser}
-					handleSubmit={handleSubmit}
-					loading={loading}
-				/>
-				{loading && <p>Loading...</p>}
-				<p
-					ref={errRef}
-					className={errorMsg ? 'errorMsg' : 'offscreen'}
-					aria-live='assertive'
-				>
-					{errorMsg}
-				</p>
-			</section>
-		)
+		<div className='flex items-center justify-center'>
+			<main>
+				<div className='bg-white dark:bg-gray-900 shadow-md rounded-lg px-8 py-6 max-w-md'>
+					<h1 className='text-2xl font-bold text-center mb-4 dark:text-gray-200'>
+						Welcome Back!
+					</h1>
+					<LoginForm
+						user={user}
+						setUser={setUser}
+						handleSubmit={handleSubmit}
+						loading={loading}
+					/>
+				</div>
+				{loading && <Loading />}
+				<ErrorMsg errorMsg={errorMsg} errRef={errRef} />
+			</main>
+		</div>
 	);
 }
