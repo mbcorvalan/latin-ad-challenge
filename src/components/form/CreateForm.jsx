@@ -1,6 +1,6 @@
-import TextInput from './TextInput';
-import TextAreaInput from './TextAreaInput';
-import SelectInput from './SelectInput';
+import TextInput from '../common/TextInput';
+import TextAreaInput from '../common/TextAreaInput';
+import SelectInput from '../common/SelectInput';
 import PropTypes from 'prop-types';
 import CustomButton from '../common/CustomButton';
 
@@ -49,7 +49,7 @@ const CreateForm = ({
 
 CreateForm.propTypes = {
 	formData: PropTypes.object.isRequired,
-	errors: PropTypes.object, // Corrected to include errors as a separate prop
+	errors: PropTypes.object,
 	handleChange: PropTypes.func.isRequired,
 	handleSubmit: PropTypes.func.isRequired,
 	formFieldConfig: PropTypes.objectOf(

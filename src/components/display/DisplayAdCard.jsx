@@ -2,16 +2,35 @@ import PropTypes from 'prop-types';
 import CustomButton from '../common/CustomButton';
 import DisplayDelete from './DisplayDelete';
 import DisplayProduct from './DisplayProduct';
+import { useNavigate } from 'react-router-dom';
 
-function DisplayAdCard({
+const DisplayAdCard = ({
 	id,
 	name,
+	description,
 	resolution_height,
 	resolution_width,
 	price_per_day,
 	type,
 	picture_url,
-}) {
+}) => {
+	const navigate = useNavigate();
+
+	const handleEdit = () => {
+		navigate('/edit', {
+			state: {
+				id,
+				name,
+				description,
+				resolution_height,
+				resolution_width,
+				price_per_day,
+				type,
+				picture_url,
+			},
+		});
+	};
+
 	return (
 		<>
 			<td className='px-6 py-4 whitespace-no-wrap border-b border-gray-200'>
@@ -56,7 +75,7 @@ function DisplayAdCard({
 			</td>
 			<td className='px-6 py-4 whitespace-no-wrap border-b border-gray-200'>
 				<div className='text-sm leading-5 text-gray-900'>
-					<CustomButton onClick={() => console.log('Edit')}>Edit</CustomButton>
+					<CustomButton onClick={handleEdit}>Edit</CustomButton>
 				</div>
 			</td>
 			<td className='px-6 py-4 whitespace-no-wrap border-b border-gray-200'>
@@ -66,11 +85,12 @@ function DisplayAdCard({
 			</td>
 		</>
 	);
-}
+};
 
 DisplayAdCard.propTypes = {
 	id: PropTypes.number.isRequired,
 	name: PropTypes.string.isRequired,
+	description: PropTypes.string.isRequired,
 	price_per_day: PropTypes.string.isRequired,
 	resolution_height: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 		.isRequired,

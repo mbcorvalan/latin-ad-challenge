@@ -18,11 +18,7 @@ export default function NavBar() {
 				<div className='flex justify-between items-center h-16'>
 					<div className='flex items-center'>
 						<a href='/' className='flex items-center'>
-							<img
-								src='../../../public/latinad.svg'
-								alt='LatinAd Logo'
-								className='h-8 mr-2'
-							/>
+							<img src='/latinad.svg' alt='LatinAd Logo' className='h-8 mr-2' />
 						</a>
 					</div>
 					{name && (

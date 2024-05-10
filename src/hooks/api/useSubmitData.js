@@ -12,10 +12,10 @@ export const useSubmitData = () => {
 		setError(null);
 		try {
 			const result = await postDisplay(formData, auth.accessToken);
-			return result; // Assuming result has data indicative of success
+			return result;
 		} catch (err) {
 			setError(err.message);
-			throw err; // Re-throw the error to handle it in the calling function
+			throw err;
 		} finally {
 			setLoading(false);
 		}

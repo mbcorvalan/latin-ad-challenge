@@ -9,9 +9,9 @@ export const validateField = (name, value) => {
 				return `${name} must be less than 256 characters`;
 			}
 			break;
-		case 'pricePerDay':
-		case 'resolutionHeight':
-		case 'resolutionWidth':
+		case 'price_per_day':
+		case 'resolution_height':
+		case 'resolution_width':
 			if (!/^\d+$/.test(value)) {
 				return `Please enter a valid integer for ${name}`;
 			}

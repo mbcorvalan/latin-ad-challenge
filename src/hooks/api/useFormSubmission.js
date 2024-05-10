@@ -11,7 +11,7 @@ export const useFormSubmission = () => {
 			await submitData(transformedData);
 		} catch (error) {
 			console.error('Failed to submit:', error);
-			throw error; // Keep the error throwing to allow further up handling
+			throw error;
 		}
 	};
 

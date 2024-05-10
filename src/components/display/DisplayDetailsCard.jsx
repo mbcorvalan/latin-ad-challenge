@@ -53,24 +53,18 @@ function DisplayDetailsCard({ displayData }) {
 }
 
 DisplayDetailsCard.propTypes = {
-	displayData: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.number.isRequired,
-			name: PropTypes.string.isRequired,
-			description: PropTypes.string.isRequired,
-			price_per_day: PropTypes.string.isRequired,
-			resolution_height: PropTypes.oneOfType([
-				PropTypes.string,
-				PropTypes.number,
-			]).isRequired,
-			resolution_width: PropTypes.oneOfType([
-				PropTypes.string,
-				PropTypes.number,
-			]).isRequired,
-			type: PropTypes.string.isRequired,
-			picture_url: PropTypes.string,
-		}),
-	).isRequired,
+	displayData: PropTypes.shape({
+		id: PropTypes.number.isRequired,
+		name: PropTypes.string.isRequired,
+		description: PropTypes.string.isRequired,
+		price_per_day: PropTypes.string.isRequired,
+		resolution_height: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+			.isRequired,
+		resolution_width: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+			.isRequired,
+		type: PropTypes.string.isRequired,
+		picture_url: PropTypes.string,
+	}).isRequired,
 };
 
 export default DisplayDetailsCard;

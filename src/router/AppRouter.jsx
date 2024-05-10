@@ -5,6 +5,7 @@ import LoginPage from '../pages/LoginPage';
 import DashBoard from '../pages/DashBoard';
 import CreateDisplay from '../pages/CreateDisplay';
 import DisplayDetails from '../pages/DisplayDetails';
+import UpdateDisplay from '../pages/UpdateDisplay';
 /**
  * Component representing the main router of the application.
  * @returns {JSX.Element} JSX element representing the main router.
@@ -30,6 +31,14 @@ export default function AppRouter() {
 					element={
 						<RequireAuth>
 							<CreateDisplay />
+						</RequireAuth>
+					}
+				/>
+				<Route
+					path='/edit'
+					element={
+						<RequireAuth>
+							<UpdateDisplay />
 						</RequireAuth>
 					}
 				/>
