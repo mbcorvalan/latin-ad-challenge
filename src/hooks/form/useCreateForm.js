@@ -23,8 +23,6 @@ const useCreateForm = (initialState, validate) => {
 		e.preventDefault();
 		const newErrors = {};
 		let isValid = true;
-
-		// Validate all fields before submitting
 		Object.keys(formData).forEach(key => {
 			const error = validate(key, formData[key]);
 			if (error) {
@@ -40,7 +38,6 @@ const useCreateForm = (initialState, validate) => {
 		}
 	};
 
-	// Function to reset the form to its initial state
 	const resetForm = () => {
 		setFormData(initialState);
 		setErrors({});
@@ -51,7 +48,7 @@ const useCreateForm = (initialState, validate) => {
 		errors,
 		handleChange,
 		handleSubmit,
-		resetForm, // Include resetForm in the returned object
+		resetForm,
 	};
 };
 

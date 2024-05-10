@@ -25,9 +25,9 @@ export const useDisplayForm = () => {
 		setSubmittedSuccessfully(false);
 		setSubmitError('');
 		try {
-			await submitForm(formData); // Ensure this throws an error on failure
-			setSubmittedSuccessfully(true); // This only runs if no error was thrown
-			resetForm(); // Reset formData to initialState after successful submission
+			await submitForm(formData);
+			setSubmittedSuccessfully(true);
+			resetForm();
 		} catch (error) {
 			console.error('Error during form submission:', error);
 			setSubmitError(error.message || 'Error submitting form');

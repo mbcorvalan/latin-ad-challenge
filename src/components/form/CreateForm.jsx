@@ -13,37 +13,42 @@ const CreateForm = ({
 	isLoading,
 }) => {
 	return (
-		<form
-			onSubmit={handleSubmit}
-			className='max-w-lg w-full mx-auto px-4 sm:px-6 lg:px-8'
-		>
-			{Object.entries(formFieldConfig).map(([key, { type, options }]) => {
-				const commonProps = {
-					name: key,
-					value: formData[key],
-					onChange: handleChange,
-					error: errors && errors[key],
-					className:
-						'shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500',
-				};
-
-				switch (type) {
-					case 'textarea':
-						return <TextAreaInput key={key} {...commonProps} />;
-					case 'select':
-						return <SelectInput key={key} {...commonProps} options={options} />;
-					default:
-						return <TextInput key={key} {...commonProps} />;
-				}
-			})}
-			<CustomButton
-				type='submit'
-				disabled={isLoading}
-				className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-sky-500 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500'
+		<div>
+			<form
+				onSubmit={handleSubmit}
+				className='max-w-lg w-full mx-auto px-4 sm:px-6 lg:px-8'
 			>
-				{isLoading ? 'Submitting...' : 'Submit'}
-			</CustomButton>
-		</form>
+				{Object.entries(formFieldConfig).map(([key, { type, options }]) => {
+					// Separar la propiedad 'key' del resto de las propiedades para cumplir con los requerimientos de React
+					const inputProps = {
+						name: key,
+						value: formData[key],
+						onChange: handleChange,
+						error: errors[key],
+						className:
+							'shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500',
+					};
+
+					switch (type) {
+						case 'textarea':
+							return <TextAreaInput key={key} {...inputProps} />;
+						case 'select':
+							return (
+								<SelectInput key={key} {...inputProps} options={options} />
+							);
+						default:
+							return <TextInput key={key} {...inputProps} />;
+					}
+				})}
+				<CustomButton
+					type='submit'
+					disabled={isLoading}
+					className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-sky-500 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500'
+				>
+					{isLoading ? 'Submitting...' : 'Submit'}
+				</CustomButton>
+			</form>
+		</div>
 	);
 };
 
