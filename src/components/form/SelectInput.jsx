@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
+import { formatLabel } from '../../utils/formatLabel';
 
 const SelectInput = ({ name, value, onChange, error, options }) => (
 	<div className='mb-4'>
 		<label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
-			{name.charAt(0).toUpperCase() + name.slice(1).replace(/([A-Z])/g, ' $1')}:
+			{formatLabel(name)}
 		</label>
 		<select name={name} value={value} onChange={onChange}>
 			{options.map(option => (
