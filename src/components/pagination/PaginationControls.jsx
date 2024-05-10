@@ -1,3 +1,15 @@
+/**
+ * Renders pagination controls consisting of "Previous" and "Next" buttons along with the current page indicator.
+ * This component enables navigation between paginated resources by interacting with provided callback functions.
+ * The buttons are disabled appropriately based on the current page relative to the total number of pages.
+ *
+ * @param {Object} props - The properties passed to the PaginationControls component.
+ * @param {number} props.currentPage - The current page number.
+ * @param {number} props.totalPages - The total number of pages available.
+ * @param {Function} props.onNext - Callback function that is called when the "Next" button is clicked.
+ * @param {Function} props.onPrev - Callback function that is called when the "Previous" button is clicked.
+ * @returns {JSX.Element} A div element that contains the pagination control buttons and page indicator.
+ */
 import PropTypes from 'prop-types';
 import CustomButton from '../common/CustomButton';
 

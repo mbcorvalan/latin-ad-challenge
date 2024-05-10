@@ -1,9 +1,20 @@
+/**
+ * Renders a login form with email and password fields.
+ * It captures user input and submits the form, handling state updates and validations.
+ * The form uses controlled components for input fields to manage form data through React state.
+ *
+ * @param {Object} props - The properties passed to the LoginForm component.
+ * @param {Object} props.user - The user object containing the current form state.
+ * @param {Function} props.setUser - Function to update the user state.
+ * @param {Function} props.handleSubmit - Function to execute when the form is submitted.
+ * @param {boolean} props.loading - Indicates whether the form is currently in the process of logging in (submitting).
+ * @returns {JSX.Element} A form element that includes email and password inputs, and a submit button.
+ */
 import PropTypes from 'prop-types';
 import CustomButton from '../common/CustomButton';
 
 const LoginForm = ({ user, setUser, handleSubmit, loading }) => {
 	return (
-		// Ajuste de clases para manejar el tamaño del formulario
 		<form
 			onSubmit={handleSubmit}
 			className='max-w-lg w-full mx-auto px-4 sm:px-6 lg:px-8'

@@ -1,3 +1,10 @@
+/**
+ * Retrieves a product by its ID.
+ * @param {Object} params - The parameters for retrieving the product.
+ * @param {number} params.id - The ID of the product to retrieve.
+ * @param {string} params.token - Authorization token.
+ * @returns {Promise<Object>} The response from the server containing the product details.
+ */
 import axiosInstance from './axios';
 
 export const getProduct = async ({ id, token }) => {

@@ -1,3 +1,9 @@
+/**
+ * Renders a success message alert.
+ * This component is used to indicate that an operation, such as a form submission, has been successfully completed.
+ *
+ * @returns {JSX.Element} A div containing a styled message that communicates successful completion of an operation.
+ */
 const DisplaySuccessMessage = () => {
 	return (
 		<div className='flex items-center justify-center m-2'>

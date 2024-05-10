@@ -1,3 +1,10 @@
+/**
+ * Deletes a product by its ID.
+ * @param {Object} params - The parameters for deleting the product.
+ * @param {number} params.id - The ID of the product to delete.
+ * @param {string} params.token - Authorization token.
+ * @returns {Promise<Object>} The response from the server after deletion.
+ */
 import axiosInstance from './axios';
 
 export const deleteProduct = async ({ id, token }) => {

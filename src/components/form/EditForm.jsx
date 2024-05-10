@@ -1,24 +1,34 @@
+/**
+ * A form component for editing existing entries, managing state and validation for each field.
+ * It supports text inputs, text areas, and selection inputs. The form allows updating various properties
+ * like name, description, price, resolution, and type. Changes are submitted when the form is valid.
+ *
+ * @param {Object} props - The properties passed to the EditForm component.
+ * @param {Object} props.initialValues - Initial values for form fields, used to populate the form when loaded.
+ * @param {Function} props.handleSubmit - Function to execute when the form is submitted.
+ * @param {boolean} props.isLoading - Indicates whether the form is currently submitting data.
+ * @returns {JSX.Element} A form element that includes input fields for editing details and a submit button.
+ */
 import PropTypes from 'prop-types';
 import CustomButton from '../common/CustomButton';
 import { useState } from 'react';
 import { validateField } from '../../utils/validations';
-
-export default function EditForm({ location, handleSubmit, isLoading }) {
+export default function EditForm({ initialValues, handleSubmit, isLoading }) {
 	const [formData, setFormData] = useState({
 		fields: {
-			name: location.name || '',
-			description: location.description || '',
-			price_per_day: location.price_per_day || '',
-			resolution_height: location.resolution_height || '',
-			resolution_width: location.resolution_width || '',
-			type: location.type || 'indoor',
+			name: initialValues.name || '',
+			description: initialValues.description || '',
+			price_per_day: initialValues.price_per_day || '',
+			resolution_height: initialValues.resolution_height || '',
+			resolution_width: initialValues.resolution_width || '',
+			type: initialValues.type || 'indoor',
 		},
 		errors: {},
 	});
 
 	const handleChange = event => {
 		const { name, value } = event.target;
-		const error = validateField(name, value); // Llamar a validateField para verificar el campo
+		const error = validateField(name, value);
 
 		setFormData(prev => ({
 			...prev,
@@ -66,6 +76,9 @@ export default function EditForm({ location, handleSubmit, isLoading }) {
 					value={formData.fields.name}
 					onChange={handleChange}
 				/>
+				{formData.errors.name && (
+					<p className='text-red-500 text-xs mt-1'>{formData.errors.name}</p>
+				)}
 			</div>
 			<div className='mb-4'>
 				<label
@@ -80,6 +93,11 @@ export default function EditForm({ location, handleSubmit, isLoading }) {
 					value={formData.fields.description}
 					onChange={handleChange}
 				/>
+				{formData.errors.description && (
+					<p className='text-red-500 text-xs mt-1'>
+						{formData.errors.description}
+					</p>
+				)}
 			</div>
 			<div className='mb-4'>
 				<label
@@ -95,6 +113,11 @@ export default function EditForm({ location, handleSubmit, isLoading }) {
 					value={formData.fields.price_per_day}
 					onChange={handleChange}
 				/>
+				{formData.errors.price_per_day && (
+					<p className='text-red-500 text-xs mt-1'>
+						{formData.errors.price_per_day}
+					</p>
+				)}
 			</div>
 			<div className='mb-4'>
 				<label
@@ -110,6 +133,13 @@ export default function EditForm({ location, handleSubmit, isLoading }) {
 					value={formData.fields.resolution_height}
 					onChange={handleChange}
 				/>
+				<p className='text-red-500 text-xs mt-1'>
+					{formData.errors.resolution_height && (
+						<p className='text-red-500 text-xs mt-1'>
+							{formData.errors.resolution_height}
+						</p>
+					)}
+				</p>
 			</div>
 			<div className='mb-4'>
 				<label
@@ -125,6 +155,13 @@ export default function EditForm({ location, handleSubmit, isLoading }) {
 					value={formData.fields.resolution_width}
 					onChange={handleChange}
 				/>
+				<p className='text-red-500 text-xs mt-1'>
+					{formData.errors.resolution_width && (
+						<p className='text-red-500 text-xs mt-1'>
+							{formData.errors.resolution_width}
+						</p>
+					)}
+				</p>
 			</div>
 			<div className='mb-4'>
 				<label
@@ -155,7 +192,7 @@ export default function EditForm({ location, handleSubmit, isLoading }) {
 }
 
 EditForm.propTypes = {
-	location: PropTypes.object.isRequired,
+	initialValues: PropTypes.object.isRequired,
 	handleSubmit: PropTypes.func.isRequired,
 	isLoading: PropTypes.bool.isRequired,
 };

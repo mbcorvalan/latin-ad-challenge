@@ -1,3 +1,14 @@
+/**
+ * Custom hook for fetching and managing the state of a specific display product's data.
+ * This hook utilizes the getProduct API call to fetch data, handling loading states, error messaging, and data retrieval.
+ *
+ * @param {number} displayId - The unique identifier for the display product to fetch.
+ * @returns {Object} An object containing:
+ *   - displayData: The data retrieved for the display, or null if none is found or an error occurs.
+ *   - loading: Boolean indicating if the request is in progress.
+ *   - error: String describing any error that occurred during the fetch operation.
+ */
+
 import { useState, useEffect, useCallback } from 'react';
 import { getProduct } from '../../api/displayProduct';
 import useAuth from '../auth/useAuth';

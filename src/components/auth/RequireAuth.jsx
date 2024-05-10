@@ -1,10 +1,12 @@
+/**
+ * Component that requires authentication to access protected routes.
+ * If the user is not authenticated, they are redirected to the login page.
+ * @returns {JSX.Element|null} JSX element for redirection if unauthenticated, otherwise null.
+ */
+
 import { useLocation, Navigate } from 'react-router-dom';
 import useAuth from '../../hooks/auth/useAuth';
 
-/**
- * Component to require authentication for accessing private routes.
- * @returns {JSX.Element|null} JSX element representing redirection or null.
- */
 const RequireAuth = () => {
 	const { auth } = useAuth();
 	const location = useLocation();

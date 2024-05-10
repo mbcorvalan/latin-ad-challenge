@@ -1,3 +1,10 @@
+/**
+ * Renders a navigation bar for the application.
+ * This component includes the application's logo and a welcome message if the user is authenticated.
+ * Additionally, it provides a logout button that triggers the removal of user data and redirects to the login page.
+ *
+ * @returns {JSX.Element} A navigation bar element that provides user interaction for navigating and logging out.
+ */
 import useAuth from '../../hooks/auth/useAuth';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from '../common/CustomButton';

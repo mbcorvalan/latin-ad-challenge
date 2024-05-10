@@ -1,3 +1,19 @@
+/**
+ * Component that displays a single advertisement card for a product.
+ * This card includes product details such as name, price per day, type, and resolution.
+ * It provides buttons to view more details, edit, and delete the product.
+ *
+ * @param {Object} props - The properties passed to the component.
+ * @param {number} props.id - The unique identifier for the product.
+ * @param {string} props.name - The name of the product.
+ * @param {string} props.description - The description of the product.
+ * @param {string} props.price_per_day - The rental price per day of the product.
+ * @param {string|number} props.resolution_height - The height of the product's resolution.
+ * @param {string|number} props.resolution_width - The width of the product's resolution.
+ * @param {string} props.type - The type of product, e.g., 'indoor' or 'outdoor'.
+ * @param {string} props.picture_url - The URL of the product's picture.
+ * @returns {JSX.Element} A JSX element representing the advertisement card.
+ */
 import PropTypes from 'prop-types';
 import CustomButton from '../common/CustomButton';
 import DisplayDelete from './DisplayDelete';

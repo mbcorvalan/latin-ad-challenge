@@ -1,3 +1,12 @@
+/**
+ * Renders a search form with input fields for 'name' and 'type' and includes submit and reset functionality.
+ * This form allows users to filter search results based on the provided criteria and reset them to default values.
+ *
+ * @param {Object} props - The properties passed to the SearchForm component.
+ * @param {Function} props.onSubmit - Function to execute when the form is submitted to apply the search filters.
+ * @param {Function} props.onReset - Function to execute when the reset button is clicked to clear all search filters.
+ * @returns {JSX.Element} A form element that includes search input, type selector, and buttons to submit and reset the form.
+ */
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import CustomButton from '../common/CustomButton';
@@ -21,7 +30,7 @@ const SearchForm = ({ onSubmit, onReset }) => {
 			name: '',
 			type: '',
 		});
-		onReset(); // Llamar a la función de restablecimiento de filtros
+		onReset();
 	};
 
 	return (

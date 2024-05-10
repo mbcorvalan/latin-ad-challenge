@@ -1,3 +1,12 @@
+/**
+ * Renders a textarea input component.
+ * @param {Object} props - The properties passed to the textarea input component.
+ * @param {string} props.name - The name of the textarea, used for form submission and label association.
+ * @param {string} props.value - The current value of the textarea.
+ * @param {Function} props.onChange - The function to call when the value of the textarea changes.
+ * @param {string} [props.error] - An error message to display if there is an error.
+ * @returns {JSX.Element} A div wrapping a label and a textarea element.
+ */
 import PropTypes from 'prop-types';
 import { formatLabel } from '../../utils/formatLabel';
 

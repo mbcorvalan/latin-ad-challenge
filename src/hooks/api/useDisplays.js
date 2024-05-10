@@ -1,3 +1,22 @@
+/**
+ * Custom hook for fetching and managing a list of display products based on pagination and filter criteria.
+ * This hook integrates with the getProducts API to fetch data and manages loading states, error handling, and data storage.
+ * It responds to changes in product state, re-fetching data when necessary.
+ *
+ * @param {Object} params - The parameters for fetching display products.
+ * @param {number} params.pageSize - The number of items per page.
+ * @param {number} params.offset - The pagination offset.
+ * @param {string} [params.name] - Optional filter by product name.
+ * @param {string} [params.type] - Optional filter by product type.
+ * @param {string} params.token - Authorization token.
+ * @returns {Object} An object containing:
+ *   - displays: Array of display data.
+ *   - totalCount: Total number of products that match the query, useful for pagination.
+ *   - loading: Boolean indicating if the request is in progress.
+ *   - error: String describing any errors encountered during the fetch.
+ *   - fetchData: Function to trigger data fetching manually.
+ */
+
 import { useState, useEffect, useCallback } from 'react';
 import { getProducts } from '../../api/displayProducts';
 import useProductChange from '../state/useProductChange';

@@ -1,3 +1,18 @@
+/**
+ * Renders a dynamic form with various input types based on configuration provided.
+ * This component is flexible and can handle text inputs, text areas, and select inputs based on the `formFieldConfig`.
+ * It manages state changes, submissions, and also displays loading states.
+ *
+ * @param {Object} props - The properties passed to the CreateForm component.
+ * @param {Object} props.formData - The current state values of the form fields.
+ * @param {Object} props.errors - Errors for the form fields.
+ * @param {Function} props.handleChange - Function to handle changes to each form field.
+ * @param {Function} props.handleSubmit - Function to execute when the form is submitted.
+ * @param {Object} props.formFieldConfig - Configuration object that specifies the type and options for each field.
+ * @param {boolean} props.isLoading - Boolean indicating if the form is currently submitting.
+ * @returns {JSX.Element} A form element populated with specified fields and a submit button.
+ */
+
 import TextInput from '../common/TextInput';
 import TextAreaInput from '../common/TextAreaInput';
 import SelectInput from '../common/SelectInput';
@@ -19,7 +34,6 @@ const CreateForm = ({
 				className='max-w-lg w-full mx-auto px-4 sm:px-6 lg:px-8'
 			>
 				{Object.entries(formFieldConfig).map(([key, { type, options }]) => {
-					// Separar la propiedad 'key' del resto de las propiedades para cumplir con los requerimientos de React
 					const inputProps = {
 						name: key,
 						value: formData[key],

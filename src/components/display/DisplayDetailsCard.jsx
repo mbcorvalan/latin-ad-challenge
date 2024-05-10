@@ -1,5 +1,23 @@
-import PropTypes from 'prop-types';
+/**
+ * Component that renders detailed information about a display in a card layout.
+ * It shows the display's picture, name, description, type, resolution, and price per day.
+ * It also offers a button to potentially buy the display. The layout is responsive,
+ * accommodating different screen sizes.
+ *
+ * @param {Object} props - The properties passed to the component.
+ * @param {Object} props.displayData - The data of the display to be detailed.
+ * @param {number} props.displayData.id - The unique identifier of the display.
+ * @param {string} props.displayData.name - The name of the display.
+ * @param {string} props.displayData.description - The description of the display.
+ * @param {string|number} props.displayData.price_per_day - The price per day of the display.
+ * @param {string|number} props.displayData.resolution_height - The height of the display's resolution.
+ * @param {string|number} props.displayData.resolution_width - The width of the display's resolution.
+ * @param {string} props.displayData.type - The type of the display, e.g., 'indoor' or 'outdoor'.
+ * @param {string} [props.displayData.picture_url] - The URL of the display's picture.
+ * @returns {JSX.Element} A JSX element that renders the detailed display card.
+ */
 
+import PropTypes from 'prop-types';
 function DisplayDetailsCard({ displayData }) {
 	if (!displayData) {
 		return <p>No data available.</p>;

@@ -1,48 +1,18 @@
 import EditForm from '../components/form/EditForm';
-import { formFieldConfig } from '../utils/formFieldConfig';
 import DisplayErrorMsg from '../components/display/DisplayErrorMsg';
 import DisplaySuccessMessage from '../components/display/DisplaySuccessMessage';
-import { useNavigate, useLocation } from 'react-router-dom';
 import CustomButton from '../components/common/CustomButton';
-import useAuth from '../hooks/auth/useAuth';
-import { putProduct } from '../api/updateProduct';
-import { useState } from 'react';
+import useUpdateDisplay from '../hooks/api/useUpdateDisplay';
+import { formFieldConfig } from '../utils/formFieldConfig';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const UpdateDisplay = () => {
+	const { isLoading, submitError, isSubmittedSuccessfully, handleSubmit } =
+		useUpdateDisplay();
+
 	const navigate = useNavigate();
+
 	const location = useLocation();
-
-	const { auth } = useAuth();
-
-	const [isLoading, setLoading] = useState(false);
-	const [submitError, setError] = useState(null);
-	const [isSubmittedSuccessfully, setSubmittedSuccessfully] = useState(false);
-
-	const handleSubmit = async formaData => {
-		setLoading(true);
-		setError(null);
-
-		try {
-			const result = await putProduct({
-				id: location.state.id,
-				displayData: formaData,
-				token: auth.accessToken,
-			});
-			setLoading(false);
-			setSubmittedSuccessfully(true);
-			setTimeout(() => {
-				navigate('/dashboard', { state: { from: location } });
-			}, 3000);
-			return result;
-		} catch (err) {
-			setError(err.message);
-			setLoading(false);
-			setSubmittedSuccessfully(false);
-			throw err;
-		} finally {
-			setLoading(false);
-		}
-	};
 
 	return (
 		<>
@@ -58,10 +28,10 @@ const UpdateDisplay = () => {
 			{submitError && <DisplayErrorMsg message={submitError} />}
 			{!isSubmittedSuccessfully && (
 				<EditForm
-					location={location.state}
+					initialValues={location.state}
 					handleSubmit={handleSubmit}
-					formFieldConfig={formFieldConfig}
 					isLoading={isLoading}
+					formFieldConfig={formFieldConfig}
 				/>
 			)}
 		</>

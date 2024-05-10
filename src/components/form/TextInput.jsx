@@ -1,3 +1,16 @@
+/**
+ * Renders a text input component with a label.
+ * This component is used for capturing single-line text inputs. It displays a label formatted from the input name,
+ * handles input changes through an onChange function, and can display an error message if an error is present.
+ *
+ * @param {Object} props - The properties passed to the TextInput component.
+ * @param {string} props.name - The name of the input, used for form submission and label association.
+ * @param {string} props.value - The current value of the text input.
+ * @param {Function} props.onChange - The function to call when the value of the text input changes.
+ * @param {string} [props.error] - An error message to display if there is an error.
+ * @returns {JSX.Element} A div wrapping a label and a text input element.
+ */
+
 import PropTypes from 'prop-types';
 import { formatLabel } from '../../utils/formatLabel';
 
